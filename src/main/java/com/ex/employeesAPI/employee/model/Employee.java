@@ -1,11 +1,13 @@
 package com.ex.employeesAPI.employee.model;
 
 import com.ex.employeesAPI.employee.employeeStatus.EmployeeStatus;
+import com.ex.employeesAPI.employee.employeeStatus.validation.EmployeeStatusSubset;
 import com.ex.employeesAPI.payment.model.Payment;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
@@ -17,20 +19,23 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employee_id")
     private Long id;
-    @NotNull
+    @NotNull(message = "First name cannot be null")
+    @NotEmpty(message = "First name cannot be empty")
     private String firstName;
-    @NotNull
+    @NotNull(message = "Last name cannot be null")
+    @NotEmpty(message = "Last name cannot be empty")
     private String lastName;
-    @URL
+    @URL(message = "Photo link has to be URL")
     private String photoUrl;
-    @NotNull
+    @NotNull(message = "Date of birth cannot be null")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
-    @NotNull
+    @NotNull(message = "Date of hire cannot be null")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfHire;
-    @NotNull
+    @NotNull(message = "Employee status cannot be null")
     @Enumerated(EnumType.STRING)
+    @EmployeeStatusSubset
     private EmployeeStatus employeeStatus;
     @OneToMany(mappedBy = "employee")
     private List<Payment> payments;

@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/api/employee")
+@RestController
+@RequestMapping(value = "/api/employee")
 public class EmployeeController {
 
     private EmployeeService employeeService;
@@ -28,5 +29,9 @@ public class EmployeeController {
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
     public Employee getEmployeeById (@PathVariable Long id){
         return employeeService.findById(id);
+    }
+    @RequestMapping(method = RequestMethod.POST)
+    public Employee addNewEmployee (@RequestBody EmployeeDto employeeDto){
+        return employeeService.addNewEmployee(employeeDto);
     }
 }
