@@ -1,6 +1,10 @@
 package com.ex.employeesAPI.employee.employeeStatus;
 
 
+import com.ex.employeesAPI.employee.model.Employee;
+
+import java.util.Set;
+
 public enum EmployeeStatus {
     WORKING("Working"),
     ON_VACATION ("On vacation"),
@@ -8,18 +12,20 @@ public enum EmployeeStatus {
     SICK_LEAVE ("Sick leave"),
     RETIRED ("Retired");
 
-    private String text;
-    EmployeeStatus(String text){
-        this.text = text;
+    private String description;
+    EmployeeStatus(String description){
+        this.description = description;
     }
 
     @Override
     public String toString() {
-        return text;
+        return description;
     }
-
+    public static Set<EmployeeStatus> notWorkingEmployeeStatuses(){
+        return Set.of(EmployeeStatus.FIRED, EmployeeStatus.RETIRED);
+    }
     public boolean isWorking() {
-        return this != EmployeeStatus.RETIRED && this != EmployeeStatus.FIRED;
+        return  !(notWorkingEmployeeStatuses().contains(this));
     }
 
 }
