@@ -38,4 +38,5 @@ public class ExceptionsHandler {
             errors.add("Price must be numeric and this format number.xx'");
         return errors;
     }
+
 }

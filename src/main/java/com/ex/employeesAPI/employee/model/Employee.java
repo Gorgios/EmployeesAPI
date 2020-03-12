@@ -1,5 +1,6 @@
 package com.ex.employeesAPI.employee.model;
 
+import com.ex.employeesAPI.common.validation.FutureDate;
 import com.ex.employeesAPI.employee.employeeStatus.EmployeeStatus;
 import com.ex.employeesAPI.payment.model.Payment;
 import com.fasterxml.jackson.annotation.JsonFilter;
@@ -34,9 +35,11 @@ public class Employee {
     private String photoUrl;
     @NotNull(message = "Date of birth cannot be null")
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @FutureDate
     private LocalDate dateOfBirth;
     @NotNull(message = "Date of hire cannot be null")
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @FutureDate
     private LocalDate dateOfHire;
     @NotNull(message = "Employee status cannot be null")
     @Enumerated(EnumType.STRING)

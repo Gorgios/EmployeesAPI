@@ -16,4 +16,8 @@ public interface EmployeeService {
 
     Employee updateEmployee(EmployeeDto employeeDto, Long employeeId);
 
+    List<Employee> findAllWorking();
+
+    List<Employee> findAllNotWorking();
+
 }

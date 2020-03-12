@@ -6,7 +6,7 @@ import com.ex.employeesAPI.employee.repository.EmployeeRepository;
 import com.ex.employeesAPI.payment.dto.PaymentDto;
 import com.ex.employeesAPI.payment.exception.PaymentNotFoundException;
 import com.ex.employeesAPI.payment.model.Payment;
-import com.ex.employeesAPI.payment.model.PaymentBuilder;
+import com.ex.employeesAPI.payment.builder.PaymentBuilder;
 import com.ex.employeesAPI.payment.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

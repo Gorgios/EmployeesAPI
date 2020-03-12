@@ -1,11 +1,10 @@
-package com.ex.employeesAPI.employee.model;
+package com.ex.employeesAPI.employee.builder;
 
 import com.ex.employeesAPI.employee.dto.EmployeeDto;
 import com.ex.employeesAPI.employee.employeeStatus.EmployeeStatus;
-import com.ex.employeesAPI.payment.model.Payment;
+import com.ex.employeesAPI.employee.model.Employee;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public final class EmployeeBuilder {
 

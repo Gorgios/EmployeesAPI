@@ -3,11 +3,12 @@ package com.ex.employeesAPI.employee.service;
 import com.ex.employeesAPI.employee.dto.EmployeeDto;
 import com.ex.employeesAPI.employee.exception.EmployeeNotFoundException;
 import com.ex.employeesAPI.employee.model.Employee;
-import com.ex.employeesAPI.employee.model.EmployeeBuilder;
+import com.ex.employeesAPI.employee.builder.EmployeeBuilder;
 import com.ex.employeesAPI.employee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,5 +43,25 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new EmployeeNotFoundException(employeeId);
         Employee employee = EmployeeBuilder.anEmployee().build(employeeDto,employeeId);
         return employeeRepository.save(employee);
+    }
+
+    @Override
+    public List<Employee> findAllWorking() {
+        List<Employee> employees = employeeRepository.findAll();
+        List<Employee> working = new ArrayList<>();
+        for (Employee e: employees)
+            if (e.getEmployeeStatus().isWorking())
+                working.add(e);
+        return working;
+    }
+
+    @Override
+    public List<Employee> findAllNotWorking() {
+        List<Employee> employees = employeeRepository.findAll();
+        List<Employee> notWorking = new ArrayList<>();
+        for (Employee e: employees)
+            if (e.getEmployeeStatus().isWorking())
+                notWorking.add(e);
+        return  notWorking;
     }
 }

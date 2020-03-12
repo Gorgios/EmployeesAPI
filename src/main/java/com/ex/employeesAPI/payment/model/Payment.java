@@ -1,12 +1,16 @@
 package com.ex.employeesAPI.payment.model;
 
+import com.ex.employeesAPI.common.validation.FutureDate;
 import com.ex.employeesAPI.employee.model.Employee;
+import com.ex.employeesAPI.payment.validation.Money;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -17,10 +21,12 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_id")
     private Long id;
-    @NotNull
+    @NotNull(message = "Date of payment cannot be null")
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @FutureDate
     private LocalDate dateOfPayment;
-    @NotNull
+    @NotNull(message = "Amount cannot be null")
+    @Money
     private Double amount;
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "employee_id")
