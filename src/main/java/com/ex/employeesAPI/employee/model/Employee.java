@@ -2,6 +2,7 @@ package com.ex.employeesAPI.employee.model;
 
 import com.ex.employeesAPI.common.validation.FutureDate;
 import com.ex.employeesAPI.employee.employeeStatus.EmployeeStatus;
+import com.ex.employeesAPI.employee.validation.ValidAfterDate;
 import com.ex.employeesAPI.payment.model.Payment;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "employee")
+@ValidAfterDate
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,6 +4,7 @@ import com.ex.employeesAPI.employee.exception.EmployeeNotFoundException;
 import com.ex.employeesAPI.employee.model.Employee;
 import com.ex.employeesAPI.employee.repository.EmployeeRepository;
 import com.ex.employeesAPI.payment.dto.PaymentDto;
+import com.ex.employeesAPI.payment.exception.DateStartIsAfterDayEndException;
 import com.ex.employeesAPI.payment.exception.PaymentNotFoundException;
 import com.ex.employeesAPI.payment.model.Payment;
 import com.ex.employeesAPI.payment.builder.PaymentBuilder;
@@ -67,7 +68,9 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Double countPaymentAmountFromPeriod(LocalDate start, LocalDate end, Long employeeId) {
+    public Double countPaymentAmountFromPeriod(LocalDate start, LocalDate end, Long employeeId) throws DateStartIsAfterDayEndException {
+        if (start.compareTo(end) > 0)
+            throw new DateStartIsAfterDayEndException(start,end); // throws exeption if first date is after second
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
         List<Payment> payments = paymentRepository.findALlByEmployeeAndDateOfPaymentAfterAndDateOfPaymentBefore(employee, start.minusDays(1), end.plusDays(1));
         return getAverageAmount(payments);

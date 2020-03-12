@@ -1,6 +1,7 @@
 package com.ex.employeesAPI.payment.controller;
 
 import com.ex.employeesAPI.payment.dto.PaymentDto;
+import com.ex.employeesAPI.payment.exception.DateStartIsAfterDayEndException;
 import com.ex.employeesAPI.payment.model.Payment;
 import com.ex.employeesAPI.payment.service.PaymentService;
 import org.apache.tomcat.jni.Local;
@@ -57,7 +58,7 @@ public class PaymentController {
     }
 
     @GetMapping("/amount_by_period/{employeeId}")
-    public Double amountByPeriod(@PathVariable Long employeeId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+    public Double amountByPeriod(@PathVariable Long employeeId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) throws DateStartIsAfterDayEndException {
         return paymentService.countPaymentAmountFromPeriod(start, end, employeeId);
 
     }
