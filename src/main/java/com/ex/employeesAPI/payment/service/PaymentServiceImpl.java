@@ -32,18 +32,18 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<Payment> getAllPayments() {
+    public List<Payment> findAll() {
         return paymentRepository.findAll();
     }
 
     @Override
-    public List<Payment> getPaymentsByEmployeeId(Long employeeId) {
+    public List<Payment> findAllByEmployee(Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
         return paymentRepository.findAllByEmployee(employee);
     }
 
     @Override
-    public Payment findPaymentById(Long paymentId) {
+    public Payment findById(Long paymentId) {
         return paymentRepository.findById(paymentId).orElseThrow(() -> new PaymentNotFoundException(paymentId));
     }
 
@@ -80,7 +80,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<Payment> getPaymentsByListOfEmployees(List<Long> employeesIds) {
+    public List<Payment> findAllByEmployees(List<Long> employeesIds) {
         List<Payment> payments = new ArrayList<>();
         for (Long id : employeesIds)
             payments.addAll(paymentRepository.findAllByEmployee(employeeRepository.findById(id).orElseThrow(()-> new EmployeeNotFoundException(id))));

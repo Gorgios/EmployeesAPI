@@ -1,13 +1,11 @@
 package com.ex.employeesAPI.employee.model;
 
 import com.ex.employeesAPI.common.validation.FutureDate;
-import com.ex.employeesAPI.common.views.Views;
 import com.ex.employeesAPI.employee.employee.EmployeeStatus;
 import com.ex.employeesAPI.employee.validation.ValidAfterDate;
 import com.ex.employeesAPI.payment.model.Payment;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
@@ -23,7 +21,6 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employee_id")
-    @JsonView(Views.Public.class)
     private Long id;
     @NotNull(message = "First name cannot be null")
     @NotEmpty(message = "First name cannot be empty")

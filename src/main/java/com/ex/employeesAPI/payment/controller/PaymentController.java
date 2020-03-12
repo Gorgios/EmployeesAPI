@@ -23,12 +23,12 @@ public class PaymentController {
 
     @GetMapping
     public List<Payment> getAllPayments() {
-        return paymentService.getAllPayments();
+        return paymentService.findAll();
     }
 
     @GetMapping("/{paymentId}")
     public Payment getPaymentById(@PathVariable Long paymentId) {
-        return paymentService.findPaymentById(paymentId);
+        return paymentService.findById(paymentId);
     }
 
     @PostMapping
@@ -43,12 +43,12 @@ public class PaymentController {
 
     @GetMapping("/employees_payments")
     public List<Payment> paymentsOffEmployees (@RequestParam List<Long> employeesIds){
-        return paymentService.getPaymentsByListOfEmployees(employeesIds);
+        return paymentService.findAllByEmployees(employeesIds);
     }
 
     @GetMapping("/employee_payments/{employeeId}")
     public List<Payment> employeePayments(@PathVariable Long employeeId) {
-        return paymentService.getPaymentsByEmployeeId(employeeId);
+        return paymentService.findAllByEmployee(employeeId);
     }
 
     @GetMapping("/amount_last_year/{employeeId}")

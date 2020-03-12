@@ -7,11 +7,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface PaymentService {
-    List<Payment> getAllPayments();
+    List<Payment> findAll();
 
-    List<Payment> getPaymentsByEmployeeId(Long employeeId);
+    List<Payment> findAllByEmployee(Long employeeId);
 
-    Payment findPaymentById(Long paymentId);
+    Payment findById(Long paymentId);
 
     Payment addNewPayment(PaymentDto paymentDto, Long employeeId);
 
@@ -21,5 +21,5 @@ public interface PaymentService {
 
     Double countPaymentAmountFromPeriod(LocalDate start, LocalDate end, Long employeeId) throws DateStartIsAfterDayEndException;
 
-    List<Payment> getPaymentsByListOfEmployees(List<Long> employeesIds);
+    List<Payment> findAllByEmployees(List<Long> employeesIds);
 }

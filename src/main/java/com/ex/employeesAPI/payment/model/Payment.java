@@ -1,17 +1,10 @@
 package com.ex.employeesAPI.payment.model;
 
 import com.ex.employeesAPI.common.validation.FutureDate;
-import com.ex.employeesAPI.common.views.Views;
 import com.ex.employeesAPI.employee.model.Employee;
 import com.ex.employeesAPI.payment.validation.Money;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.annotation.JsonView;
-import org.springframework.format.annotation.NumberFormat;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -31,7 +24,6 @@ public class Payment {
     private Double amount;
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "employee_id")
-    @JsonView(Views.Public.class)
     private Employee employee;
 
     public Long getId() {

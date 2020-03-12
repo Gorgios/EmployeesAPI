@@ -4,13 +4,12 @@ import com.ex.employeesAPI.employee.dto.EmployeeDto;
 import com.ex.employeesAPI.employee.service.EmployeeService;
 import com.ex.employeesAPI.payment.dto.PaymentDto;
 import com.ex.employeesAPI.payment.exception.DateStartIsAfterDayEndException;
+import com.ex.employeesAPI.payment.exception.PaymentNotFoundException;
 import com.ex.employeesAPI.payment.model.Payment;
 import com.ex.employeesAPI.payment.service.PaymentService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -20,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.fail;
@@ -54,13 +54,13 @@ public class PaymentTests {
         PaymentDto paymentDto = new PaymentDto();
         paymentDto.setAmount(2000.33);
         paymentService.addNewPayment(paymentDto, id);
-        Long paymentId = paymentService.getAllPayments().get(0).getId();
+        Long paymentId = paymentService.findAll().get(0).getId();
         // check that date of payment is today date
-        Assert.assertEquals(LocalDate.now(), paymentService.findPaymentById(paymentId).getDateOfPayment());
+        Assert.assertEquals(LocalDate.now(), paymentService.findById(paymentId).getDateOfPayment());
 
         // check that payment has employee
 
-        Assert.assertEquals(id.longValue(), paymentService.findPaymentById(paymentId).getEmployee().getId().longValue());
+        Assert.assertEquals(id.longValue(), paymentService.findById(paymentId).getEmployee().getId().longValue());
 
     }
 
@@ -70,14 +70,14 @@ public class PaymentTests {
         PaymentDto paymentDto = new PaymentDto();
         paymentDto.setAmount(2000.33);
         paymentService.addNewPayment(paymentDto, id);
-        Long paymentId = paymentService.getAllPayments().get(0).getId();
+        Long paymentId = paymentService.findAll().get(0).getId();
 
-        Assert.assertEquals("2000.33", paymentService.findPaymentById(paymentId).getAmount().toString());
+        Assert.assertEquals("2000.33", paymentService.findById(paymentId).getAmount().toString());
 
         paymentDto.setAmount(200.33);
         paymentService.updatePayment(paymentDto, paymentId, id);
 
-        Assert.assertEquals("200.33", paymentService.findPaymentById(paymentId).getAmount().toString());
+        Assert.assertEquals("200.33", paymentService.findById(paymentId).getAmount().toString());
 
     }
 
@@ -89,11 +89,32 @@ public class PaymentTests {
         paymentService.addNewPayment(paymentDto, id);
         paymentDto.setAmount(2000D);
         paymentService.addNewPayment(paymentDto,id);
-        List<Payment> payments = paymentService.getPaymentsByEmployeeId(id);
+        List<Payment> payments = paymentService.findAllByEmployee(id);
 
         Assert.assertEquals(2,payments.size());
         Assert.assertEquals("2000.33",payments.get(0).getAmount().toString());
         Assert.assertEquals("2000.0",payments.get(1).getAmount().toString());
+
+    }
+    @Test
+    public void  testGetPaymentByFewEmployees(){
+        Long id = employeeService.findAll().get(0).getId();
+        Long id2 = employeeService.findAll().get(1).getId();
+        PaymentDto paymentDto = new PaymentDto();
+        paymentDto.setAmount(2000.33);
+        paymentService.addNewPayment(paymentDto, id);
+        paymentDto.setAmount(2000D);
+        paymentService.addNewPayment(paymentDto,id);
+        paymentService.addNewPayment(paymentDto,id2);
+        List<Long> ids = new ArrayList<>();
+        ids.add(id);
+        ids.add(id2);
+        List<Payment> payments = paymentService.findAllByEmployees(ids);
+
+        Assert.assertEquals(3,payments.size());
+        Assert.assertEquals("2000.33",payments.get(0).getAmount().toString());
+        Assert.assertEquals("2000.0",payments.get(1).getAmount().toString());
+        Assert.assertEquals("2000.0",payments.get(2).getAmount().toString());
 
     }
     @Test
@@ -146,5 +167,9 @@ public class PaymentTests {
         PaymentDto paymentDto = new PaymentDto();
         paymentDto.setAmount(200.333);
         fail(String.valueOf(paymentService.addNewPayment(paymentDto,id)));
+    }
+    @Test(expected = PaymentNotFoundException.class)
+    public void testPaymentNotFOund() throws  PaymentNotFoundException{
+        fail(String.valueOf(paymentService.findById(2L)));
     }
 }
