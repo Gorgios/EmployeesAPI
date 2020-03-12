@@ -8,32 +8,34 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @RunWith(SpringRunner.class)
 public class EmployeeStatusTests {
 
+
     @Test
     public void testCheckIsWorking() {
-        Employee employee = new Employee();
-        employee.setId(1L);
-        employee.setFirstName("xxx");
-        employee.setLastName("xxx");
-        employee.setDateOfBirth(LocalDate.of(1990, 10, 10));
-        employee.setDateOfHire(LocalDate.of(2015, 11, 01));
-        employee.setEmployeeStatus(EmployeeStatus.ON_VACATION);
-        Assert.assertTrue(employee.getEmployeeStatus().isWorking());
-        employee.setEmployeeStatus(EmployeeStatus.FIRED);
-        Assert.assertFalse(employee.getEmployeeStatus().isWorking());
+        List<EmployeeStatus> employed = new ArrayList<>();
+        employed.add(EmployeeStatus.SICK_LEAVE);
+        employed.add(EmployeeStatus.WORKING);
+        employed.add(EmployeeStatus.ON_VACATION);
+        List <EmployeeStatus> unemployed = new ArrayList<>();
+        unemployed.add(EmployeeStatus.FIRED);
+        unemployed.add(EmployeeStatus.RETIRED);
+        for (EmployeeStatus e: employed)
+            Assert.assertTrue(e.isWorking());
+        for (EmployeeStatus e : unemployed)
+            Assert.assertFalse(e.isWorking());
     }
+
     @Test
     public void testStatusReturnGoodString() {
         Employee employee = new Employee();
-        employee.setId(1L);
-        employee.setFirstName("xxx");
-        employee.setLastName("xxx");
-        employee.setDateOfBirth(LocalDate.of(1990, 10, 10));
-        employee.setDateOfHire(LocalDate.of(2015, 11, 01));
         employee.setEmployeeStatus(EmployeeStatus.ON_VACATION);
-        Assert.assertEquals("On vacation",employee.getEmployeeStatus().toString());
+        Assert.assertEquals("On vacation", employee.getEmployeeStatus().toString());
     }
 }

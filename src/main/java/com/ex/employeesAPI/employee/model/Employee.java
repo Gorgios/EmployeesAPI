@@ -1,12 +1,14 @@
 package com.ex.employeesAPI.employee.model;
 
 import com.ex.employeesAPI.employee.employeeStatus.EmployeeStatus;
-import com.ex.employeesAPI.employee.employeeStatus.validation.EmployeeStatusSubset;
 import com.ex.employeesAPI.payment.model.Payment;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -35,7 +37,6 @@ public class Employee {
     private LocalDate dateOfHire;
     @NotNull(message = "Employee status cannot be null")
     @Enumerated(EnumType.STRING)
-    @EmployeeStatusSubset
     private EmployeeStatus employeeStatus;
     @OneToMany(mappedBy = "employee")
     private List<Payment> payments;

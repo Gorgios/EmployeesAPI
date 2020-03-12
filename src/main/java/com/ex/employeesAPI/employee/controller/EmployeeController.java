@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/employee")
+@RequestMapping("/api/employee")
 public class EmployeeController {
 
     private EmployeeService employeeService;
@@ -22,16 +22,20 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public List<Employee> getAllEmployees() {
         return employeeService.findAll();
     }
-    @RequestMapping(method = RequestMethod.GET, path = "/{id}")
+    @GetMapping("{id}")
     public Employee getEmployeeById (@PathVariable Long id){
         return employeeService.findById(id);
     }
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public Employee addNewEmployee (@RequestBody EmployeeDto employeeDto){
         return employeeService.addNewEmployee(employeeDto);
+    }
+    @PutMapping("{id}")
+    public Employee updateEmployee (@RequestBody EmployeeDto employeeDto, @PathVariable  Long id){
+        return employeeService.updateEmployee(employeeDto,id);
     }
 }

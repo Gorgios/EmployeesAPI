@@ -12,16 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
+
 import static org.junit.Assert.fail;
 
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ComponentScan("com.ex.employeesAPI.employee.service")
 @RunWith(SpringRunner.class)
 public class EmployeeEntityTest {
@@ -29,20 +32,22 @@ public class EmployeeEntityTest {
     private EmployeeService employeeService;
 
     @Test
-    public void testAddEmployee(){
+    public void testAddEmployee() {
         EmployeeDto employeeDto = new EmployeeDto();
         employeeDto.setFirstName("xxx");
         employeeDto.setLastName("xxx");
-        employeeDto.setDateOfBirth(LocalDate.of(1990,10,10));
+        employeeDto.setDateOfBirth(LocalDate.of(1990, 10, 10));
         employeeService.addNewEmployee(employeeDto);
-        Assert.assertEquals(employeeService.findAll().size(),1);
+        Assert.assertEquals(employeeService.findAll().size(), 1);
     }
+
     @Test(expected = ConstraintViolationException.class)
-    public void testAddEmployeeWithEmptyName() throws ConstraintViolationException{
+    public void testAddEmployeeWithEmptyName() throws ConstraintViolationException {
         EmployeeDto employeeDto = new EmployeeDto();
         employeeDto.setFirstName("");
         employeeDto.setLastName("xxx");
-        employeeDto.setDateOfBirth(LocalDate.of(1990,10,10));
+        employeeDto.setDateOfBirth(LocalDate.of(1990, 10, 10));
         fail(String.valueOf(employeeService.addNewEmployee(employeeDto)));
     }
+
 }

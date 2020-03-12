@@ -21,11 +21,11 @@ public enum EmployeeStatus {
     public String toString() {
         return description;
     }
-    public static Set<EmployeeStatus> notWorkingEmployeeStatuses(){
-        return Set.of(EmployeeStatus.FIRED, EmployeeStatus.RETIRED);
+    private Set<EmployeeStatus> notWorkingEmployeeStatuses(){
+        return Set.of(EmployeeStatus.WORKING, EmployeeStatus.ON_VACATION, EmployeeStatus.SICK_LEAVE);
     }
     public boolean isWorking() {
-        return  !(notWorkingEmployeeStatuses().contains(this));
+        return  notWorkingEmployeeStatuses().contains(this);
     }
 
 }

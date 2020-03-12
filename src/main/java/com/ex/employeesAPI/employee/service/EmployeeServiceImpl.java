@@ -4,12 +4,14 @@ import com.ex.employeesAPI.employee.dto.EmployeeDto;
 import com.ex.employeesAPI.employee.employeeStatus.EmployeeStatus;
 import com.ex.employeesAPI.employee.exceptions.EmployeeNotFoundException;
 import com.ex.employeesAPI.employee.model.Employee;
+import com.ex.employeesAPI.employee.model.EmployeeBuilder;
 import com.ex.employeesAPI.employee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -33,24 +35,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addNewEmployee(EmployeeDto employeeDto) {
-        Employee employee = new Employee();
-        employee.setFirstName(employeeDto.getFirstName());
-        employee.setLastName(employeeDto.getLastName());
-        if (employeeDto.getEmployeeStatus() == null)
-            employee.setEmployeeStatus(EmployeeStatus.WORKING);
-        else
-            employee.setEmployeeStatus(employeeDto.getEmployeeStatus());
-        employee.setDateOfBirth(employeeDto.getDateOfBirth());
-        if (employeeDto.getDateOfHire() == null)
-            employee.setDateOfHire(LocalDate.now());
-        else
-            employee.setDateOfHire(employeeDto.getDateOfHire());
-        employee.setPhotoUrl(employeeDto.getPhotoUrl());
+        Employee employee = EmployeeBuilder.anEmployee().build(employeeDto);
         return employeeRepository.save(employee);
     }
 
     @Override
     public Employee updateEmployee(EmployeeDto employeeDto, Long employeeId) {
-        return null;
+        if( employeeRepository.findById(employeeId).isEmpty())
+            throw new EmployeeNotFoundException(employeeId);
+        Employee employee = EmployeeBuilder.anEmployee().build(employeeDto,employeeId);
+        return employeeRepository.save(employee);
     }
 }
