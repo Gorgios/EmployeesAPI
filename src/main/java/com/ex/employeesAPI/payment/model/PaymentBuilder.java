@@ -14,14 +14,15 @@ public final class PaymentBuilder {
         return new PaymentBuilder();
     }
 
-    public Payment build(PaymentDto paymentDto, Employee employee){
+    public Payment build(PaymentDto paymentDto, Employee employee) {
         Payment payment = new Payment();
         payment.setAmount(paymentDto.getAmount());
         payment.setDateOfPayment(getDateOfPayment(paymentDto.getDateOfPayment()));
         payment.setEmployee(employee);
         return payment;
     }
-    public Payment build(PaymentDto paymentDto, Long id, Employee employee){
+
+    public Payment build(PaymentDto paymentDto, Long id, Employee employee) {
         Payment payment = new Payment();
         payment.setId(id);
         payment.setAmount(paymentDto.getAmount());
@@ -29,9 +30,10 @@ public final class PaymentBuilder {
         payment.setEmployee(employee);
         return payment;
     }
-    private LocalDate getDateOfPayment(LocalDate dateOfPayment){
+
+    private LocalDate getDateOfPayment(LocalDate dateOfPayment) {
         if (dateOfPayment != null)
-            return  dateOfPayment;
+            return dateOfPayment;
         return LocalDate.now();
     }
 }

@@ -9,10 +9,16 @@ import java.util.List;
 
 public interface PaymentService {
     List<Payment> getAllPayments();
-    List<Payment> getPaymentsByEmployeeId (Long employeeId);
+
+    List<Payment> getPaymentsByEmployeeId(Long employeeId);
+
     Payment findPaymentById(Long paymentId);
+
     Payment addNewPayment(PaymentDto paymentDto, Long employeeId);
-    Payment updatePayment (PaymentDto paymentDto, Long paymentId, Long employeeId);
-    Double countPaymentAmountFromLastYear();
-    Double countPaymentAmountFromPeriod(LocalDate start, LocalDate end);
+
+    Payment updatePayment(PaymentDto paymentDto, Long paymentId, Long employeeId);
+
+    Double countPaymentAmountFromLastYear(Long employeeId);
+
+    Double countPaymentAmountFromPeriod(LocalDate start, LocalDate end, Long employeeId);
 }

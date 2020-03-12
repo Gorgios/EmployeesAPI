@@ -33,36 +33,49 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<Payment> getPaymentsByEmployeeId(Long employeeId) {
-       return null;
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
+        return paymentRepository.findAllByEmployee(employee);
     }
 
     @Override
     public Payment findPaymentById(Long paymentId) {
-        return paymentRepository.findById(paymentId).orElseThrow(()->new PaymentNotFoundException(paymentId));
+        return paymentRepository.findById(paymentId).orElseThrow(() -> new PaymentNotFoundException(paymentId));
     }
 
     @Override
     public Payment addNewPayment(PaymentDto paymentDto, Long employeeId) {
-        Employee employee = employeeRepository.findById(employeeId).orElseThrow(()->new EmployeeNotFoundException(employeeId));
-        return paymentRepository.save( PaymentBuilder.anPayment().build(paymentDto,employee));
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
+        return paymentRepository.save(PaymentBuilder.anPayment().build(paymentDto, employee));
     }
 
     @Override
     public Payment updatePayment(PaymentDto paymentDto, Long paymentId, Long employeeId) {
         if (paymentRepository.findById(paymentId).isEmpty())
             throw new PaymentNotFoundException(paymentId);
-        Employee employee = employeeRepository.findById(employeeId).orElseThrow(()->new EmployeeNotFoundException(employeeId));
-        return paymentRepository.save(PaymentBuilder.anPayment().build(paymentDto,paymentId,employee));
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
+        return paymentRepository.save(PaymentBuilder.anPayment().build(paymentDto, paymentId, employee));
 
     }
 
     @Override
-    public Double countPaymentAmountFromLastYear() {
-        return null;
+    public Double countPaymentAmountFromLastYear(Long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
+        LocalDate dateStart = LocalDate.now().minusYears(1);
+        List<Payment> payments = paymentRepository.findAllByEmployeeAndDateOfPaymentAfter(employee, dateStart);
+        return getAverageAmount(payments);
     }
 
     @Override
-    public Double countPaymentAmountFromPeriod(LocalDate start, LocalDate end) {
-        return null;
+    public Double countPaymentAmountFromPeriod(LocalDate start, LocalDate end, Long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
+        List<Payment> payments = paymentRepository.findALlByEmployeeAndDateOfPaymentAfterAndDateOfPaymentBefore(employee, start, end);
+        return getAverageAmount(payments);
+    }
+
+    private Double getAverageAmount(List<Payment> payments) {
+        double sum = 0;
+        for (Payment payment : payments)
+            sum += payment.getAmount();
+        return sum / payments.size();
     }
 }

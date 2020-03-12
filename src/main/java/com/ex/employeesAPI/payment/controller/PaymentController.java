@@ -22,16 +22,19 @@ public class PaymentController {
     public List<Payment> getAllPayments() {
         return paymentService.getAllPayments();
     }
+
     @GetMapping("{id}")
-    public Payment getPaymentById(@PathVariable Long id){
+    public Payment getPaymentById(@PathVariable Long id) {
         return paymentService.findPaymentById(id);
     }
+
     @PostMapping
-    public Payment addNewPayment(@RequestBody PaymentDto paymentDto, @RequestParam Long employeeId){
-        return paymentService.addNewPayment(paymentDto,employeeId);
+    public Payment addNewPayment(@RequestBody PaymentDto paymentDto, @RequestParam Long employeeId) {
+        return paymentService.addNewPayment(paymentDto, employeeId);
     }
+
     @PutMapping("{id}")
-    public Payment updatePayment(@RequestBody PaymentDto paymentDto, @PathVariable Long id, @RequestParam Long employeeId){
-        return paymentService.updatePayment(paymentDto,id,employeeId);
+    public Payment updatePayment(@RequestBody PaymentDto paymentDto, @PathVariable Long id, @RequestParam Long employeeId) {
+        return paymentService.updatePayment(paymentDto, id, employeeId);
     }
 }
