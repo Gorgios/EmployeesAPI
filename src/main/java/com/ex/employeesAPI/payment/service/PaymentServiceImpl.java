@@ -19,6 +19,9 @@ import java.util.List;
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
+    private static final int DAY = 1;
+    private static final int YEAR = 1;
+
     private PaymentRepository paymentRepository;
     private EmployeeRepository employeeRepository;
 
@@ -62,7 +65,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Double countPaymentAmountFromLastYear(Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
-        LocalDate dateStart = LocalDate.now().minusYears(1);
+        LocalDate dateStart = LocalDate.now().minusYears(YEAR);
         List<Payment> payments = paymentRepository.findAllByEmployeeAndDateOfPaymentAfter(employee, dateStart);
         return getAverageAmount(payments);
     }
@@ -72,7 +75,7 @@ public class PaymentServiceImpl implements PaymentService {
         if (start.compareTo(end) > 0)
             throw new DateStartIsAfterDayEndException(start,end); // throws exeption if first date is after second
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
-        List<Payment> payments = paymentRepository.findALlByEmployeeAndDateOfPaymentAfterAndDateOfPaymentBefore(employee, start.minusDays(1), end.plusDays(1));
+        List<Payment> payments = paymentRepository.findALlByEmployeeAndDateOfPaymentAfterAndDateOfPaymentBefore(employee, start.minusDays(DAY), end.plusDays(DAY));
         return getAverageAmount(payments);
     }
 

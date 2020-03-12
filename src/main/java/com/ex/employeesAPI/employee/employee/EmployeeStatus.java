@@ -1,7 +1,5 @@
-package com.ex.employeesAPI.employee.employeeStatus;
+package com.ex.employeesAPI.employee.employee;
 
-
-import com.ex.employeesAPI.employee.model.Employee;
 
 import java.util.Set;
 
@@ -21,11 +19,11 @@ public enum EmployeeStatus {
     public String toString() {
         return description;
     }
-    private Set<EmployeeStatus> notWorkingEmployeeStatuses(){
+    private Set<EmployeeStatus> workingEmployeeStatuses(){
         return Set.of(EmployeeStatus.WORKING, EmployeeStatus.ON_VACATION, EmployeeStatus.SICK_LEAVE);
     }
     public boolean isWorking() {
-        return  notWorkingEmployeeStatuses().contains(this);
+        return  workingEmployeeStatuses().contains(this);
     }
 
 }

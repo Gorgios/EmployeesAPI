@@ -4,7 +4,6 @@ import com.ex.employeesAPI.payment.dto.PaymentDto;
 import com.ex.employeesAPI.payment.exception.DateStartIsAfterDayEndException;
 import com.ex.employeesAPI.payment.model.Payment;
 import com.ex.employeesAPI.payment.service.PaymentService;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +26,7 @@ public class PaymentController {
         return paymentService.getAllPayments();
     }
 
-    @GetMapping("{paymentId}")
+    @GetMapping("/{paymentId}")
     public Payment getPaymentById(@PathVariable Long paymentId) {
         return paymentService.findPaymentById(paymentId);
     }
@@ -37,7 +36,7 @@ public class PaymentController {
         return paymentService.addNewPayment(paymentDto, employeeId);
     }
 
-    @PutMapping("{paymentId}")
+    @PutMapping("/{paymentId}")
     public Payment updatePayment(@RequestBody PaymentDto paymentDto, @PathVariable Long paymentId, @RequestParam Long employeeId) {
         return paymentService.updatePayment(paymentDto, paymentId, employeeId);
     }

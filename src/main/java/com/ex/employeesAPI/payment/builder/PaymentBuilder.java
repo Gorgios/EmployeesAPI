@@ -4,10 +4,8 @@ package com.ex.employeesAPI.payment.builder;
 import com.ex.employeesAPI.employee.model.Employee;
 import com.ex.employeesAPI.payment.dto.PaymentDto;
 import com.ex.employeesAPI.payment.model.Payment;
-
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.time.LocalDate;
+// Its builder which build new Payment from PaymentDTO
 
 public final class PaymentBuilder {
     private PaymentBuilder() {

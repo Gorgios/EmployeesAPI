@@ -1,17 +1,14 @@
 package com.ex.employeesAPI.employee;
 
-import com.ex.employeesAPI.employee.employeeStatus.EmployeeStatus;
+import com.ex.employeesAPI.employee.employee.EmployeeStatus;
 import com.ex.employeesAPI.employee.model.Employee;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RunWith(SpringRunner.class)
 public class EmployeeStatusTests {

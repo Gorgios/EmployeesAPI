@@ -16,11 +16,13 @@ public class MoneyValidator implements ConstraintValidator<Money, Double> {
     public boolean isValid(Double amount, ConstraintValidatorContext constraintValidatorContext) {
         if (amount < 0)
             return false;
-        String amountString = amount.toString();
-        if (amountString.contains("."))
-            return (amountString.indexOf(".") > amountString.length() - 4 && amountString.indexOf(".") < amountString.length() - 1);
-        return true;
+        return hasAmountMoneyFormat(amount.toString());
     }
 
+    private boolean hasAmountMoneyFormat(String amount){
+        int index = amount.indexOf(".");
+        int length = amount.length();
+        return (index > length - 4);
+    }
 
 }

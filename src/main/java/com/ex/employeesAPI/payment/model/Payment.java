@@ -1,6 +1,7 @@
 package com.ex.employeesAPI.payment.model;
 
 import com.ex.employeesAPI.common.validation.FutureDate;
+import com.ex.employeesAPI.common.views.Views;
 import com.ex.employeesAPI.employee.model.Employee;
 import com.ex.employeesAPI.payment.validation.Money;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -30,7 +31,7 @@ public class Payment {
     private Double amount;
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "employee_id")
-    @JsonView
+    @JsonView(Views.Public.class)
     private Employee employee;
 
     public Long getId() {

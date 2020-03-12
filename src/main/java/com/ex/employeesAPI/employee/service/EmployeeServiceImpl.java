@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -47,21 +48,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> findAllWorking() {
-        List<Employee> employees = employeeRepository.findAll();
-        List<Employee> working = new ArrayList<>();
-        for (Employee e: employees)
-            if (e.getEmployeeStatus().isWorking())
-                working.add(e);
-        return working;
+        return employeeRepository.findAll().stream().filter(x -> x.getEmployeeStatus().isWorking()).collect(Collectors.toList());
     }
-
     @Override
     public List<Employee> findAllNotWorking() {
-        List<Employee> employees = employeeRepository.findAll();
-        List<Employee> notWorking = new ArrayList<>();
-        for (Employee e: employees)
-            if (e.getEmployeeStatus().isWorking())
-                notWorking.add(e);
-        return  notWorking;
+        return employeeRepository.findAll().stream().filter(x -> !x.getEmployeeStatus().isWorking()).collect(Collectors.toList());
     }
 }

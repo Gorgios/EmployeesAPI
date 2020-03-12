@@ -1,6 +1,6 @@
 package com.ex.employeesAPI.employee.dto;
 
-import com.ex.employeesAPI.employee.employeeStatus.EmployeeStatus;
+import com.ex.employeesAPI.employee.employee.EmployeeStatus;
 import java.time.LocalDate;
 
 public class EmployeeDto {
@@ -10,9 +10,6 @@ public class EmployeeDto {
     private LocalDate dateOfBirth;
     private LocalDate dateOfHire;
     private EmployeeStatus employeeStatus;
-
-    public EmployeeDto(){}
-
 
     public EmployeeStatus getEmployeeStatus() {
         return employeeStatus;

@@ -24,7 +24,7 @@ public class EmployeeController {
         return employeeService.findAll();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public Employee getEmployeeById(@PathVariable Long id) {
         return employeeService.findById(id);
     }
@@ -44,7 +44,7 @@ public class EmployeeController {
         return employeeService.findAllNotWorking();
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public Employee updateEmployee(@RequestBody EmployeeDto employeeDto, @PathVariable Long id) {
         return employeeService.updateEmployee(employeeDto, id);
     }

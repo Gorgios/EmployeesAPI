@@ -1,11 +1,11 @@
 package com.ex.employeesAPI.employee.builder;
 
 import com.ex.employeesAPI.employee.dto.EmployeeDto;
-import com.ex.employeesAPI.employee.employeeStatus.EmployeeStatus;
+import com.ex.employeesAPI.employee.employee.EmployeeStatus;
 import com.ex.employeesAPI.employee.model.Employee;
 
 import java.time.LocalDate;
-
+// Its builder which build new Employee from EmployeeDTO
 public final class EmployeeBuilder {
 
     private EmployeeBuilder() {
