@@ -21,4 +21,6 @@ public interface PaymentService {
     Double countPaymentAmountFromLastYear(Long employeeId);
 
     Double countPaymentAmountFromPeriod(LocalDate start, LocalDate end, Long employeeId);
+
+    List<Payment> getPaymentsByListOfEmployees(List<Long> employeesIds);
 }

@@ -1,17 +1,14 @@
 package com.ex.employeesAPI.employee.service;
 
 import com.ex.employeesAPI.employee.dto.EmployeeDto;
-import com.ex.employeesAPI.employee.employeeStatus.EmployeeStatus;
-import com.ex.employeesAPI.employee.exceptions.EmployeeNotFoundException;
+import com.ex.employeesAPI.employee.exception.EmployeeNotFoundException;
 import com.ex.employeesAPI.employee.model.Employee;
 import com.ex.employeesAPI.employee.model.EmployeeBuilder;
 import com.ex.employeesAPI.employee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {

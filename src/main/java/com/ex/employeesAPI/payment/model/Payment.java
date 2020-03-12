@@ -2,6 +2,9 @@ package com.ex.employeesAPI.payment.model;
 
 import com.ex.employeesAPI.employee.model.Employee;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -21,6 +24,7 @@ public class Payment {
     private Double amount;
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "employee_id")
+    @JsonView
     private Employee employee;
 
     public Long getId() {

@@ -1,4 +1,4 @@
-package com.ex.employeesAPI.payment.exceptions;
+package com.ex.employeesAPI.payment.exception;
 
 public class PaymentNotFoundException extends RuntimeException {
     public PaymentNotFoundException(Long id) {

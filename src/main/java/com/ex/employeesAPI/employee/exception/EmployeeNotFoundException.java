@@ -1,4 +1,4 @@
-package com.ex.employeesAPI.employee.exceptions;
+package com.ex.employeesAPI.employee.exception;
 
 public class EmployeeNotFoundException extends RuntimeException {
     public EmployeeNotFoundException(Long id){

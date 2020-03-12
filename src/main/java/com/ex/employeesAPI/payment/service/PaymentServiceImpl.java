@@ -1,10 +1,10 @@
 package com.ex.employeesAPI.payment.service;
 
-import com.ex.employeesAPI.employee.exceptions.EmployeeNotFoundException;
+import com.ex.employeesAPI.employee.exception.EmployeeNotFoundException;
 import com.ex.employeesAPI.employee.model.Employee;
 import com.ex.employeesAPI.employee.repository.EmployeeRepository;
 import com.ex.employeesAPI.payment.dto.PaymentDto;
-import com.ex.employeesAPI.payment.exceptions.PaymentNotFoundException;
+import com.ex.employeesAPI.payment.exception.PaymentNotFoundException;
 import com.ex.employeesAPI.payment.model.Payment;
 import com.ex.employeesAPI.payment.model.PaymentBuilder;
 import com.ex.employeesAPI.payment.repository.PaymentRepository;
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -68,11 +69,21 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Double countPaymentAmountFromPeriod(LocalDate start, LocalDate end, Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
-        List<Payment> payments = paymentRepository.findALlByEmployeeAndDateOfPaymentAfterAndDateOfPaymentBefore(employee, start, end);
+        List<Payment> payments = paymentRepository.findALlByEmployeeAndDateOfPaymentAfterAndDateOfPaymentBefore(employee, start.minusDays(1), end.plusDays(1));
         return getAverageAmount(payments);
     }
 
+    @Override
+    public List<Payment> getPaymentsByListOfEmployees(List<Long> employeesIds) {
+        List<Payment> payments = new ArrayList<>();
+        for (Long id : employeesIds)
+            payments.addAll(paymentRepository.findAllByEmployee(employeeRepository.findById(id).orElseThrow(()-> new EmployeeNotFoundException(id))));
+       return payments;
+    }
+
     private Double getAverageAmount(List<Payment> payments) {
+        if (payments.size() == 0)
+            return 0.0;
         double sum = 0;
         for (Payment payment : payments)
             sum += payment.getAmount();

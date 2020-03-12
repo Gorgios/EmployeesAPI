@@ -4,6 +4,8 @@ import com.ex.employeesAPI.employee.employeeStatus.EmployeeStatus;
 import com.ex.employeesAPI.payment.model.Payment;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,6 +21,7 @@ import java.util.List;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView
     @Column(name = "employee_id")
     private Long id;
     @NotNull(message = "First name cannot be null")
@@ -39,6 +42,7 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private EmployeeStatus employeeStatus;
     @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private List<Payment> payments;
 
     public Employee() {

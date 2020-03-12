@@ -1,4 +1,4 @@
-package com.ex.employeesAPI.employee.exceptions;
+package com.ex.employeesAPI.common.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConversionException;
@@ -8,19 +8,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
-public class EmployeeExceptionHandler {
-
-    @ExceptionHandler(EmployeeNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String getEmployeeNotFoundException(EmployeeNotFoundException ex) {
-        return ex.getMessage();
-    }
-
+public class ExceptionsHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public List<String> getConstraintViolationException(ConstraintViolationException ex) {
@@ -29,14 +21,13 @@ public class EmployeeExceptionHandler {
         for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
             errors.add(violation.getMessage());
         }
-        return  errors;
+        return errors;
     }
 
 
     @ExceptionHandler(HttpMessageConversionException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public List<String> getHttpMessageConversionException (HttpMessageConversionException ex)
-    {
+    public List<String> getHttpMessageConversionException(HttpMessageConversionException ex) {
         List<String> errors = new ArrayList<>();
         errors.add("Cannot add/update");
         if (ex.getMessage().contains("java.time.LocalDate"))
@@ -44,7 +35,7 @@ public class EmployeeExceptionHandler {
         if (ex.getMessage().contains("EmployeeStatus"))
             errors.add("Employee status can be only : [WORKING, FIRED, RETIRED, SICK_LEAVE, ON_VACATION]");
         if (ex.getMessage().contains("Double"))
-            errors.add("Price must be numeric'");
-        return  errors;
+            errors.add("Price must be numeric and this format number.xx'");
+        return errors;
     }
 }

@@ -15,4 +15,5 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     List<Payment> findAllByEmployeeAndDateOfPaymentAfter(Employee employee, LocalDate start);
 
     List<Payment> findALlByEmployeeAndDateOfPaymentAfterAndDateOfPaymentBefore(Employee employee, LocalDate start, LocalDate end);
+
 }

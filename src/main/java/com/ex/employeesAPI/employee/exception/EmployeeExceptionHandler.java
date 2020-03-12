@@ -1,4 +1,4 @@
-package com.ex.employeesAPI.payment.exceptions;
+package com.ex.employeesAPI.employee.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConversionException;
@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
-public class PaymentExceptionHandler {
+public class EmployeeExceptionHandler {
 
-    @ExceptionHandler(PaymentNotFoundException.class)
+    @ExceptionHandler(EmployeeNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String getPaymentNotFoundException(PaymentNotFoundException ex) {
+    public String getEmployeeNotFoundException(EmployeeNotFoundException ex) {
         return ex.getMessage();
     }
 

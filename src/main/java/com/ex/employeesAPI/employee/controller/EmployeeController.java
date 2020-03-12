@@ -1,12 +1,9 @@
 package com.ex.employeesAPI.employee.controller;
 
 import com.ex.employeesAPI.employee.dto.EmployeeDto;
-import com.ex.employeesAPI.employee.exceptions.EmployeeNotFoundException;
 import com.ex.employeesAPI.employee.model.Employee;
-import com.ex.employeesAPI.employee.repository.EmployeeRepository;
 import com.ex.employeesAPI.employee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
