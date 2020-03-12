@@ -3,7 +3,7 @@ package com.ex.employeesAPI.payment;
 import com.ex.employeesAPI.employee.dto.EmployeeDto;
 import com.ex.employeesAPI.employee.service.EmployeeService;
 import com.ex.employeesAPI.payment.dto.PaymentDto;
-import com.ex.employeesAPI.payment.exception.DateStartIsAfterDayEndException;
+import com.ex.employeesAPI.payment.exception.DateStartIsAfterDateEndException;
 import com.ex.employeesAPI.payment.exception.PaymentNotFoundException;
 import com.ex.employeesAPI.payment.model.Payment;
 import com.ex.employeesAPI.payment.service.PaymentService;
@@ -136,7 +136,7 @@ public class PaymentTests {
     }
 
     @Test
-    public void testCountPaymentInPeriod() throws DateStartIsAfterDayEndException {
+    public void testCountPaymentInPeriod() throws DateStartIsAfterDateEndException {
         Long id = employeeService.findAll().get(0).getId();
         PaymentDto paymentDto = new PaymentDto();
         paymentDto.setAmount(2000D);
@@ -155,8 +155,8 @@ public class PaymentTests {
         Assert.assertEquals(2000D,result,2);
     }
 
-    @Test(expected = DateStartIsAfterDayEndException.class)
-    public void testBadDataInputInCountPeriod() throws  DateStartIsAfterDayEndException{
+    @Test(expected = DateStartIsAfterDateEndException.class)
+    public void testBadDataInputInCountPeriod() throws DateStartIsAfterDateEndException {
         Long id = employeeService.findAll().get(0).getId();
         fail(String.valueOf(paymentService.countPaymentAmountFromPeriod(LocalDate.now(), LocalDate.now().minusWeeks(1),id)));
     }
@@ -171,5 +171,11 @@ public class PaymentTests {
     @Test(expected = PaymentNotFoundException.class)
     public void testPaymentNotFOund() throws  PaymentNotFoundException{
         fail(String.valueOf(paymentService.findById(2L)));
+    }
+    @Test
+    public void testGetLastYear(){
+        Long id = employeeService.findAll().get(0).getId();
+
+        Assert.assertEquals(0D,paymentService.countPaymentAmountFromLastYear(id),2);
     }
 }

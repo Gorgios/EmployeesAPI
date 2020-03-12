@@ -14,9 +14,9 @@ public class PaymentExceptionHandler {
         return ex.getMessage();
     }
 
-    @ExceptionHandler(DateStartIsAfterDayEndException.class)
+    @ExceptionHandler(DateStartIsAfterDateEndException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String getDateStartIsAfterDayEndException (DateStartIsAfterDayEndException ex){
+    public String getDateStartIsAfterDayEndException (DateStartIsAfterDateEndException ex){
         return ex.getMessage();
     }
 }

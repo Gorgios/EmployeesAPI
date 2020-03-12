@@ -1,6 +1,6 @@
 package com.ex.employeesAPI.payment.service;
 import com.ex.employeesAPI.payment.dto.PaymentDto;
-import com.ex.employeesAPI.payment.exception.DateStartIsAfterDayEndException;
+import com.ex.employeesAPI.payment.exception.DateStartIsAfterDateEndException;
 import com.ex.employeesAPI.payment.model.Payment;
 
 import java.time.LocalDate;
@@ -19,7 +19,7 @@ public interface PaymentService {
 
     Double countPaymentAmountFromLastYear(Long employeeId);
 
-    Double countPaymentAmountFromPeriod(LocalDate start, LocalDate end, Long employeeId) throws DateStartIsAfterDayEndException;
+    Double countPaymentAmountFromPeriod(LocalDate start, LocalDate end, Long employeeId) throws DateStartIsAfterDateEndException;
 
     List<Payment> findAllByEmployees(List<Long> employeesIds);
 }
